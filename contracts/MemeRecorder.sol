@@ -18,11 +18,14 @@ contract Meme {
     constructor(string _ipfsHash, address _creator, string _name, uint8 _decimals, uint8 _exponent, uint256 _precision) public {
         ipfsHash = _ipfsHash;
         creator = _creator;
-        totalSupply = 0;
         name = _name;
         decimals = _decimals;        // 18
         exponent = _exponent;        // 1
         PRECISION = _precision;      // experimenting with: 10 billion > 10000000000
+
+        // to reward creators automatically give tokens
+        totalSupply = 100 * 1000;
+        tokenBalances[msg.sender] = 100 * 1000;
     }
 
     // tokens owned by each address
