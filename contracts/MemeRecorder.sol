@@ -2,7 +2,6 @@ pragma solidity ^0.4.24;
 
 // PolynomialBonding curve
 // Each meme is independent on its own on the eth blockchain
-// will implement a good modifier only to kill aka also burn the contracts of duplicates (cheaters)
 contract Meme {
     string public ipfsHash;
     address public creator; // aka owner
@@ -82,6 +81,8 @@ contract Meme {
 // Factory contract: keeps track of meme for only leaderboard and view purposes
 contract MemeRecorder {
     address[] public memeContracts;
+
+    constructor() public {}
 
     function addMeme(string _ipfsHash, string _name) public {
         Meme newMeme;
