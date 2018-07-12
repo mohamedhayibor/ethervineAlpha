@@ -51,7 +51,7 @@
 	<script>
     // sources:
     // primary: https://gist.github.com/NikitaRai2156/b65506aad68ebf59a58b4db036274e23
-		// modified: https://gist.github.com/NikitaRai2156/b65506aad68ebf59a58b4db036274e23
+	// modified: https://gist.github.com/NikitaRai2156/b65506aad68ebf59a58b4db036274e23
 		function textChangeListener (evt) {
 			var id = evt.target.id;
 			var text = evt.target.value;
@@ -71,7 +71,7 @@
 
 			if (image != null) ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-			// ctx font, strokeStyle, lineWidth, fillStyle
+			ctx.font = "30pt Impact";
 			ctx.textAlign = "center";
 			ctx.strokeStyle = "black";
 			ctx.lineWidth = "3";
@@ -119,7 +119,7 @@
 
 		window.topText = "";
 		window.bottomText = "";
-		var input1 = document.getElementById("topTex");
+		var input1 = document.getElementById("topText");
 		var input2 = document.getElementById("bottomText");
 		input1.oninput = textChangeListener;
 		input2.oninput = textChangeListener;
