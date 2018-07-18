@@ -20,7 +20,7 @@
 <body>
 	<div>
 		<h4>Testing img</h4>
-		<img id="imgtest" src>
+		<img id="imgtest" src="">
 	</div>
 
 	<div>
@@ -45,6 +45,9 @@
 				files.forEach((file) => {
 					console.log("File path: ", file.path);
 					console.log(">> File content: ", file.content.toString('utf8'));
+
+					// Test displaying img
+					document.getElementById("imgtest").src = file.content.toString('utf8');
 				});
 			});
 		}
