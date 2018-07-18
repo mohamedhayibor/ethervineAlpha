@@ -11,6 +11,28 @@ Technical scope:
 
 > For each meme traded on mint and burn, creator can buy more of their meme if they feel like their meme will perform great.
 
+
+Limitations
+---
+
+Users can only do 3 things.
+
+```
+ MemeRecorder -> Add Meme
+
+ Meme         -> Mint or Burn
+```
+
+
+Only 4 user Buttons
+---
+
+* Choose image
+* Create Meme
+* Mint
+* Burn
+
+
 Testing
 ------
 
