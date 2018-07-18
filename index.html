@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<title>MemeHack - Simple</title>
+	<title>Meme - Simple</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-	<!-- <meta name="mobile-web-app-capable" content="yes"> -->
 
 	<style>
 		#image-container {
@@ -15,25 +14,15 @@
 	<script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
 	<script type="text/javascript">
 		const node = new Ipfs({ repo: 'ipfs-' + Math.random() })
-
-		node.once('ready', () => {
-			console.log('Online status: ', node.isOnline() ? 'online' : 'offline');
-
-			// https://github.com/ipfs/interface-ipfs-core
-			function uploadImagetoIPFS(image) {
-				node.files.add(new node.types.Buffer('Hello world!'), (err, filesAdded) => {
-					if (err) {
-						return console.error('Error - ipfs add', err, res);
-					}
-
-					filesAdded.forEach((file) => console.log('successfully stored', file.hash));
-				})
-			}
-		})
 	</script>
 </head>
 
 <body>
+	<div>
+		<h4>Testing img</h4>
+		<img id="imgtest" src>
+	</div>
+
 	<div>
 		<input type="file" id="file">
 	</div>
@@ -49,10 +38,8 @@
 		</div>
 	</div>
 	<script>
-    // sources:
-    // primary: https://gist.github.com/NikitaRai2156/b65506aad68ebf59a58b4db036274e23
-	// modified: https://gist.github.com/NikitaRai2156/b65506aad68ebf59a58b4db036274e23
-		var userLatestCanvas;
+		var userLatestImgBase64;
+
 		function textChangeListener (evt) {
 			var id = evt.target.id;
 			var text = evt.target.value;
@@ -88,29 +75,24 @@
 				ctx.strokeText(bottomLine, canvas.width / 2, canvas.height - 40);
 			}
 
-			//
-			userLatestCanvas = canvas;
-			userLatestCanvas.ctx = ctx;
-			console.log("userLatestCanvas: ", userLatestCanvas);
+			userLatestImgBase64 = document.querySelector('canvas').toDataURL().slice(23);
+			console.log("userLatestImgBase64: ", userLatestImgBase64);
 		}
 
 		function saveFile(evt) {
-			// console.log("evt: ", evt);
-			// console.log("node object: ", node);
-			
-			// var buf = buffer.Buffer(reader.result);
+			var userImgBuffer = new node.types.Buffer(userLatestImgBase64);
 
-			node.files.add(userLatestCanvas, (err, res) => {
+			node.files.add(userImgBuffer, (err, res) => {
 				if (err) {
 					console.error(err);
 				}
 
+				console.log("node buffer: Uint8Array saved into ipfs: ", res);
+
 				let url = `https://ipfs.io/ipfs/${res[0].hash}`;
 				console.log("> >> > Link retrieval -----------");
 				console.log("link: ", url);
-				console.log("Saved successfully to ipfs.")
 			})
-			// node.files.add()
 		}
 
 		function handleFileSelect(evt) {
@@ -132,9 +114,7 @@
 				}
 
 				// Set image data background image
-				//image.src = data;
 				image.src = data;
-				// console.log(fileObject.target.result);
 			};
 
 			reader.readAsDataURL(file);
