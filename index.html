@@ -12,6 +12,8 @@
 	</style>
 
 	<script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
+	<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 	<script type="text/javascript">
 		const node = new Ipfs({ host: "ipfs.infura.io", port: 5001, protocol: 'https'})
 	</script>
@@ -39,6 +41,11 @@
 	</div>
 	<script>
 		var userLatestImgBase64;
+
+		// main web3 logic
+		function startApp() {
+
+		}
 
 		function imgRetrievalTest(imgHash) {
 			node.files.get(imgHash, (err, files) => {
@@ -141,6 +148,20 @@
 		input2.oninput = textChangeListener;
 		document.getElementById("file").addEventListener("change", handleFileSelect, false);
 		document.querySelector("button").addEventListener("click", saveImg, false);
+
+		// web3 init
+		window.addEventListener('load', function () {
+			// checking if web3 has been injected by the browser
+			if (typeof web3 !== 'undefined') {
+				// Use Metamask's provider
+				web3js = new Web3(web3.currentProvider);
+			} else {
+				console.log("No web3, try installing Metamask");
+				web3js = new Web3(new Web3.providers.HttpProvider("https://infura.io/"));
+			}
+
+			startApp();
+		});
 	</script>
 </body>
 </html>
