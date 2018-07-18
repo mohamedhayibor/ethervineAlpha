@@ -40,6 +40,15 @@
 	<script>
 		var userLatestImgBase64;
 
+		function imgRetrievalTest(imgHash) {
+			node.files.get(imgHash, (err, files) => {
+				files.forEach((file) => {
+					console.log("File path: ", file.path);
+					console.log(">> File content: ", file.content.toString('utf8'));
+				});
+			});
+		}
+
 		function textChangeListener (evt) {
 			var id = evt.target.id;
 			var text = evt.target.value;
@@ -75,11 +84,12 @@
 				ctx.strokeText(bottomLine, canvas.width / 2, canvas.height - 40);
 			}
 
-			userLatestImgBase64 = document.querySelector('canvas').toDataURL().slice(23);
+			// .slice(23)
+			userLatestImgBase64 = document.querySelector('canvas').toDataURL();
 			console.log("userLatestImgBase64: ", userLatestImgBase64);
 		}
 
-		function saveFile(evt) {
+		function saveImg(evt) {
 			var userImgBuffer = new node.types.Buffer(userLatestImgBase64);
 
 			node.files.add(userImgBuffer, (err, res) => {
@@ -92,7 +102,7 @@
 				let url = `https://ipfs.io/ipfs/${res[0].hash}`;
 				console.log("> >> > Link retrieval -----------");
 				console.log("link: ", url);
-			})
+			});
 		}
 
 		function handleFileSelect(evt) {
@@ -127,7 +137,7 @@
 		input1.oninput = textChangeListener;
 		input2.oninput = textChangeListener;
 		document.getElementById("file").addEventListener("change", handleFileSelect, false);
-		document.querySelector("button").addEventListener("click", saveFile, false);
+		document.querySelector("button").addEventListener("click", saveImg, false);
 	</script>
 </body>
 </html>
