@@ -33,11 +33,11 @@ Only 4 user Buttons
 * Burn
 
 
-Testing Accts
+Testing Rinkeby Accts
 ------
 
 1. [Meme Recorder](https://rinkeby.etherscan.io/address/0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5)
-2. [example](https://ropsten.etherscan.io/tx/0x63fd36ea87b870879b8764d80758d07db5dbaea5e087b7dd8c8bb58ef26feca4)
+2. [meme exple](https://rinkeby.etherscan.io/address/0xdb47329fb71dc1dfe3245610d6f8d1b59cc28eef)
 
 
 Dev setup:

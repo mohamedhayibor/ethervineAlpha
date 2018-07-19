@@ -89,9 +89,72 @@
 				});
 			}
 
+			// Get calls on smart contract >> free
+			function getMintingPrice(contractAddress, numTokens) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.getMintingPrice.call(numTokens, function (err, res) {
+					if (err) {
+						console.error("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				});
+			}
+
+			function getBurningReward(contractAddress, numTokens) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.getBurningReward.call(numTokens, function (err, res) {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				}) 
+			}
+
+			// mutating contract calls
+			function mint(contractAddress, numTokens, valueSent) {
+				let memeInstance = memeABI.at(contractAddress);
+				let ethSent = (10 ** 18) * valueSent;
+
+				memeInstance.mint(numTokens, {from: userAddress, value: ethSent}, function (err, res) {
+					if (err) {
+						return error(err);
+					}
+
+					waitConfirmation(hash, function() {
+						console.log("Successfully bought " + numTokens + " meme tokens.");
+					})
+				});
+			}
+
+			function burn(contractAddress, numTokens) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.burn(numTokens, {from: userAddress}, function (err, res) {
+					if (err) {
+						return error(err);
+					}
+
+					waitConfirmation(hash, function() {
+						console.log("Successfully burned " + numTokens + " meme tokens.");
+					})
+				})
+			}
+
+
+
 			// getters
 			return {
-				addMeme: addMeme
+				addMeme: addMeme,
+				getMintingPrice: getMintingPrice,
+				getBurningReward: getBurningReward,
+				mint: mint,
+				burn: burn
 			}
 
 
