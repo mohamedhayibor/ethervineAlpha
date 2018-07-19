@@ -22,18 +22,18 @@
 
 <body>
 	<div class="container">
-		<br><br>
+		<!-- Todo: Create better jumbotron with fading image memes later
 		<div class="jumbotron text-center">	
 			<h1>EtherVine</h1>
 			<p class="lead" style="color:#888;">Create your meme and trade its tokens on the Ethereum blockchain.</p>
-		</div>
+		</div> -->
+		<br>
 
 		<div class="row justify-content-md-center">
 			<canvas width="500" height="500"></canvas>
 			
 			<div class="userParams">
 				<input type="file" id="file" class="btn btn-light">
-				<!-- needs some spacing here, br tag not working later -->
 				<input id="memeName" type="text" class="form-control" placeholder="Enter name..." required><br>
 				<input id="topText" type="text" class="form-control" placeholder="Enter top line..."><br>
 				<input id="bottomText" type="text" class="form-control" placeholder="Enter bottom line..."><br>
@@ -82,8 +82,6 @@
 		}
 
 		function redrawMeme(image, topLine, bottomLine) {
-			var canvas = document.querySelector('canvas');
-			var ctx = canvas.getContext("2d");
 
 			if (image != null) ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -103,7 +101,6 @@
 				ctx.strokeText(bottomLine, canvas.width / 2, canvas.height - 40);
 			}
 
-			// .slice(23)
 			userLatestImgBase64 = document.querySelector('canvas').toDataURL();
 			console.log("userLatestImgBase64: ", userLatestImgBase64);
 		}
@@ -149,6 +146,7 @@
 			reader.readAsDataURL(file);
 		}
 
+		// danger zone globals :(
 		window.topText = "";
 		window.bottomText = "";
 		var input1 = document.getElementById("topText");
@@ -157,6 +155,11 @@
 		input2.oninput = textChangeListener;
 		document.getElementById("file").addEventListener("change", handleFileSelect, false);
 		document.querySelector("button").addEventListener("click", saveImg, false);
+
+		var canvas = document.querySelector('canvas');
+		var ctx = canvas.getContext("2d");
+
+		// TODO: fill with a grey preview telling the user to upload an image
 
 		// web3 init
 		window.addEventListener('load', function () {
