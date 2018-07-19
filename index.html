@@ -21,24 +21,27 @@
 </head>
 
 <body>
-	<div>
-		<h4>Testing img</h4>
-		<img id="imgtest" src="">
-	</div>
+	<div class="container">
+		<br><br>
+		<div class="jumbotron text-center">	
+			<h1>EtherVine</h1>
+			<p class="lead" style="color:#888;">Create your meme and trade its tokens on the Ethereum blockchain.</p>
+		</div>
 
-	<div>
-		<input type="file" id="file">
-	</div>
-
-	<div id="image-container">
-		<canvas width="500" height="500"></canvas>
-		<div>
-			<input id="memeName" type="text" class="form-control" placeholder="Enter meme's name..."><br>
-			<input id="topText" type="text" class="form-control" placeholder="Enter your top line..."><br>
-			<input id="bottomText" type="text" class="form-control" placeholder="Enter your bottom line..."><br>
-			<button id="saveBtn">Save</button>
+		<div class="row justify-content-md-center">
+			<canvas width="500" height="500"></canvas>
+			
+			<div class="userParams">
+				<input type="file" id="file" class="btn btn-light">
+				<!-- needs some spacing here, br tag not working later -->
+				<input id="memeName" type="text" class="form-control" placeholder="Enter name..." required><br>
+				<input id="topText" type="text" class="form-control" placeholder="Enter top line..."><br>
+				<input id="bottomText" type="text" class="form-control" placeholder="Enter bottom line..."><br>
+				<button id="saveBtn" class="btn btn-success">Create Meme</button>
+		 	</div>
 		</div>
 	</div>
+
 	<script>
 		var userLatestImgBase64;
 
