@@ -53,6 +53,26 @@
 
 			var userAddress = web3js.eth.accounts[0];
 
+			function addMeme(ipfsHash, name) {
+				// hardcoded rinkeby test MemeRecorder contract
+				var memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
+
+				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, function (err, hash) {
+					if (err) {
+						return error(err);
+					}
+
+					waitConfirmation(hash, function () {
+						console.log("Successfully added the Meme.");
+					});
+				});
+			}
+
+			// getters
+			return {
+				addMeme: addMeme
+			}
+
 
 		}
 
@@ -107,6 +127,7 @@
 
 		function saveImg(evt) {
 			var userImgBuffer = new node.types.Buffer(userLatestImgBase64);
+			var memeName = $("#memeName").val().trim();
 
 			node.files.add(userImgBuffer, (err, res) => {
 				if (err) {
@@ -115,9 +136,13 @@
 
 				console.log("node buffer: Uint8Array saved into ipfs: ", res);
 
-				let url = `https://ipfs.io/ipfs/${res[0].hash}`;
-				console.log("> >> > Link retrieval -----------");
+				let ipfsHash = res[0].hash;
+
+				let url = `https://ipfs.io/ipfs/${ipfsHash}`;
 				console.log("link: ", url);
+
+				// addMeme on MemeRecorder
+				startApp().addMeme(ipfsHash, memeName);
 			});
 		}
 

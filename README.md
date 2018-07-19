@@ -33,10 +33,10 @@ Only 4 user Buttons
 * Burn
 
 
-Testing
+Testing Accts
 ------
 
-1. [recorder](https://ropsten.etherscan.io/tx/0xd12ebb1de4fa006335105f9baf8d36b1d0edbbec31358e770ac6547c0029f842)
+1. [Meme Recorder](https://rinkeby.etherscan.io/address/0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5)
 2. [example](https://ropsten.etherscan.io/tx/0x63fd36ea87b870879b8764d80758d07db5dbaea5e087b7dd8c8bb58ef26feca4)
 
 
