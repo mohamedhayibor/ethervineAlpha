@@ -89,7 +89,9 @@
 				});
 			}
 
+			//////////////////////////////////////
 			// Get calls on smart contract >> free
+			//////////////////////////////////////
 			function getMintingPrice(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
 
@@ -116,7 +118,62 @@
 				}) 
 			}
 
+			function memeIpfsHash(contractAddress) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.ipfsHash.call(function (err, res) {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				})
+			}
+
+			function memeBalance(contractAddress) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.poolBalance.call(function (err, res) {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				})
+			}
+
+			function memeTotalSupply(contractAddress) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.totalSupply.call(function (err, res) {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				})
+			}
+
+			// assumption for sender
+			function tokenBalance(contractAddress) {
+				let memeInstance = memeABI.at(contractAddress);
+
+				memeInstance.tokenBalances.call(userAddress, function (err, res) {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				})
+			}
+
+			////////////////////////////////////
 			// mutating contract calls
+			////////////////////////////////////
 			function mint(contractAddress, numTokens, valueSent) {
 				let memeInstance = memeABI.at(contractAddress);
 				let ethSent = (10 ** 18) * valueSent;
@@ -147,16 +204,18 @@
 			}
 
 
-
 			// getters
 			return {
 				addMeme: addMeme,
 				getMintingPrice: getMintingPrice,
 				getBurningReward: getBurningReward,
+				memeIpfsHash: memeIpfsHash,
+				memeBalance: memeBalance,
+				memeTotalSupply: memeTotalSupply,
+				tokenBalance: tokenBalance,
 				mint: mint,
 				burn: burn
 			}
-
 
 		}
 
