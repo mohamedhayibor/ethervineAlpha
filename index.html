@@ -68,6 +68,27 @@
 				});
 			}
 
+			// See pattern https://programtheblockchain.com/posts/2017/12/13/building-decentralized-apps-with-ethereum-and-javascript/
+			function waitConfirmation(hash, cb) {
+				web3js.eth.getTransactionReceipt(hash, function (err, receipt) {
+					if (err) {
+						console.log(err);
+					}
+
+					if (receipt !== null) {
+						// transaction went through
+						if (cb) {
+							cb(receipt);
+						}
+					} else {
+						// try again in 1s
+						window.setTimeout(function () {
+							waitConfirmation(hash, cb);
+						}, 1000);
+					}
+				});
+			}
+
 			// getters
 			return {
 				addMeme: addMeme
