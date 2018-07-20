@@ -44,6 +44,7 @@
 
 	<script>
 		var userLatestImgBase64;
+		var allMemes;
 
 		const memeRecorderABI = web3.eth.contract([{"constant":true,"inputs":[],"name":"getMemes","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"memeContracts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ipfsHash","type":"string"},{"name":"_name","type":"string"}],"name":"addMeme","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
 
@@ -53,6 +54,8 @@
 		function startApp() {
 
 			var userAddress = web3js.eth.accounts[0];
+			// get all current memes
+			getMemes();
 
 			function addMeme(ipfsHash, name) {
 				// hardcoded rinkeby test MemeRecorder contract
@@ -96,12 +99,11 @@
 			function getMemes() {
 				let memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
 
-				memeRecorderABI.getMemes.call(function (err, res) {
+				memeRecorderInstance.getMemes.call(function (err, res) {
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						allMemes = res;
 					}
 				})
 			}
