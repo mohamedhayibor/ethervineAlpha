@@ -93,6 +93,19 @@
 			//////////////////////////////////////
 			// Get calls on smart contract >> free
 			//////////////////////////////////////
+			function getMemes(contractAddress) {
+				let memeRecorderInstance = memeRecorderABI.at(contractAddress);
+
+				memeRecorderABI.getMemes.call(function (err, res) {
+					if (err) {
+						console.error("Error: ", err);
+					} else {
+						// do something with res.s
+						return res.s;
+					}
+				})
+			}
+
 			function getMintingPrice(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
 
@@ -207,6 +220,7 @@
 
 			// getters
 			return {
+				getMemes: getMemes,
 				addMeme: addMeme,
 				getMintingPrice: getMintingPrice,
 				getBurningReward: getBurningReward,
