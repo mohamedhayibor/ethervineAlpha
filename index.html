@@ -93,8 +93,8 @@
 			//////////////////////////////////////
 			// Get calls on smart contract >> free
 			//////////////////////////////////////
-			function getMemes(contractAddress) {
-				let memeRecorderInstance = memeRecorderABI.at(contractAddress);
+			function getMemes() {
+				let memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
 
 				memeRecorderABI.getMemes.call(function (err, res) {
 					if (err) {
