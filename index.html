@@ -115,6 +115,8 @@
 			var userAddress = web3js.eth.accounts[0];
 			// get all current memes -> allMemes
 			getMemes();
+			// display current best performing memes
+			setTimeout(displayBestMemes, 2000);
 
 			function addMeme(ipfsHash, name) {
 				// hardcoded rinkeby test MemeRecorder contract
@@ -202,7 +204,10 @@
 						console.log("Error: ", err);
 					} else {
 						// display imgs on page
+						console.log(" -==--- memeIpfsHash ----==- ");
+						console.log(`imh: ${res}, id: ${imgId}`);
 						imgFromIpfs(res, imgId);
+						// imgFromIpfs
 						return res;
 					}
 				})
@@ -214,9 +219,7 @@
 				const receivedIpfsHashes = await Promise.all(allIpfsHashes);
 
 				console.log("receivedIpfsHashes: ", receivedIpfsHashes);
-				receivedIpfsHashes.map((imh, id) => {
-					console.log(`imh: ${imh}, id: ${id}`);
-				})
+				
 			}
 
 			function memeBalance(contractAddress) {
@@ -313,7 +316,7 @@
 					console.log(">> File content: ", file.content.toString('utf8'));
 
 					// Test displaying img
-					document.getElementById("best" + imgId).src = file.content.toString('utf8');
+					document.getElementById(`best${imgId}`).src = file.content.toString('utf8');
 				});
 			});
 		}
