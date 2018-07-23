@@ -174,8 +174,7 @@
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						return res;
 					}
 				});
 			}
@@ -187,8 +186,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						return res;
 					}
 				}) 
 			}
@@ -196,7 +194,6 @@
 			/////////////////////////////////////////////////////
 			// allMemes -> memeIpfsHash -> ImgFromIpfs -> display
 			/////////////////////////////////////////////////////
-
 			function memeIpfsHash(contractAddress, imgId) {
 				let memeInstance = memeABI.at(contractAddress);
 
@@ -229,8 +226,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						return res;
 					}
 				})
 			}
@@ -242,8 +238,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						return res;
 					}
 				})
 			}
@@ -256,8 +251,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						return res;
 					}
 				})
 			}
