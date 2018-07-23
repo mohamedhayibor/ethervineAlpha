@@ -120,7 +120,7 @@
 				// hardcoded rinkeby test MemeRecorder contract
 				var memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
 
-				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, function (err, hash) {
+				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, (err, hash) => {
 					if (err) {
 						return error(err);
 					}
@@ -133,7 +133,7 @@
 
 			// See pattern https://programtheblockchain.com/posts/2017/12/13/building-decentralized-apps-with-ethereum-and-javascript/
 			function waitConfirmation(hash, cb) {
-				web3js.eth.getTransactionReceipt(hash, function (err, receipt) {
+				web3js.eth.getTransactionReceipt(hash, (err, receipt) => {
 					if (err) {
 						console.log(err);
 					}
@@ -158,7 +158,7 @@
 			function getMemes() {
 				let memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
 
-				memeRecorderInstance.getMemes.call(function (err, res) {
+				memeRecorderInstance.getMemes.call((err, res) => {
 					if (err) {
 						console.error("Error: ", err);
 					} else {
@@ -170,7 +170,7 @@
 			function getMintingPrice(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.getMintingPrice.call(numTokens, function (err, res) {
+				memeInstance.getMintingPrice.call(numTokens, (err, res) => {
 					if (err) {
 						console.error("Error: ", err);
 					} else {
@@ -182,7 +182,7 @@
 			function getBurningReward(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.getBurningReward.call(numTokens, function (err, res) {
+				memeInstance.getBurningReward.call(numTokens, (err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
@@ -197,7 +197,7 @@
 			function memeIpfsHash(contractAddress, imgId) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.ipfsHash.call(function (err, res) {
+				memeInstance.ipfsHash.call((err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
@@ -222,7 +222,7 @@
 			function memeBalance(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.poolBalance.call(function (err, res) {
+				memeInstance.poolBalance.call((err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
@@ -234,7 +234,7 @@
 			function memeTotalSupply(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.totalSupply.call(function (err, res) {
+				memeInstance.totalSupply.call((err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
@@ -247,13 +247,13 @@
 			function tokenBalance(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.tokenBalances.call(userAddress, function (err, res) {
+				memeInstance.tokenBalances.call(userAddress, (err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
 						return res;
 					}
-				})
+				});
 			}
 
 			////////////////////////////////////
@@ -263,21 +263,21 @@
 				let memeInstance = memeABI.at(contractAddress);
 				let ethSent = (10 ** 18) * valueSent;
 
-				memeInstance.mint(numTokens, {from: userAddress, value: ethSent}, function (err, res) {
+				memeInstance.mint(numTokens, {from: userAddress, value: ethSent}, (err, res) => {
 					if (err) {
 						return error(err);
 					}
 
 					waitConfirmation(hash, function() {
 						console.log("Successfully bought " + numTokens + " meme tokens.");
-					})
+					});
 				});
 			}
 
 			function burn(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
 
-				memeInstance.burn(numTokens, {from: userAddress}, function (err, res) {
+				memeInstance.burn(numTokens, {from: userAddress}, (err, res) => {
 					if (err) {
 						return error(err);
 					}
