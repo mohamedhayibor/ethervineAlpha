@@ -115,8 +115,8 @@
 			var userAddress = web3js.eth.accounts[0];
 			// get all current memes -> allMemes
 			getMemes();
-			// display current best performing memes
-			setTimeout(displayBestMemes, 2000);
+			// display current best performing memes > [Todo: Horrible to fix]
+			setTimeout(displayBestMemes, 4000);
 
 			function addMeme(ipfsHash, name) {
 				// hardcoded rinkeby test MemeRecorder contract
@@ -219,7 +219,6 @@
 				const receivedIpfsHashes = await Promise.all(allIpfsHashes);
 
 				console.log("receivedIpfsHashes: ", receivedIpfsHashes);
-				
 			}
 
 			function memeBalance(contractAddress) {
@@ -231,7 +230,7 @@
 					} else {
 						return res;
 					}
-				})
+				});
 			}
 
 			function memeTotalSupply(contractAddress) {
@@ -243,7 +242,7 @@
 					} else {
 						return res;
 					}
-				})
+				});
 			}
 
 			// assumption for sender
@@ -287,8 +286,8 @@
 
 					waitConfirmation(hash, function() {
 						console.log("Successfully burned " + numTokens + " meme tokens.");
-					})
-				})
+					});
+				});
 			}
 
 
