@@ -197,16 +197,28 @@
 			// allMemes -> memeIpfsHash -> ImgFromIpfs -> display
 			/////////////////////////////////////////////////////
 
-			function memeIpfsHash(contractAddress) {
+			function memeIpfsHash(contractAddress, imgId) {
 				let memeInstance = memeABI.at(contractAddress);
 
 				memeInstance.ipfsHash.call(function (err, res) {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						// do something with res.s
-						return res.s;
+						// display imgs on page
+						imgFromIpfs(res, imgId);
+						return res;
 					}
+				})
+			}
+
+			async function displayBestMemes() {
+				// for now let's assume the first memes are the most popular
+				const allIpfsHashes = allMemes.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
+				const receivedIpfsHashes = await Promise.all(allIpfsHashes);
+
+				console.log("receivedIpfsHashes: ", receivedIpfsHashes);
+				receivedIpfsHashes.map((imh, id) => {
+					console.log(`imh: ${imh}, id: ${id}`);
 				})
 			}
 
@@ -285,28 +297,29 @@
 
 			// getters
 			return {
-				getMemes: getMemes,
-				addMeme: addMeme,
-				getMintingPrice: getMintingPrice,
-				getBurningReward: getBurningReward,
-				memeIpfsHash: memeIpfsHash,
-				memeBalance: memeBalance,
-				memeTotalSupply: memeTotalSupply,
-				tokenBalance: tokenBalance,
-				mint: mint,
-				burn: burn
+				getMemes,
+				addMeme,
+				getMintingPrice,
+				getBurningReward,
+				memeIpfsHash,
+				displayBestMemes,
+				memeBalance,
+				memeTotalSupply,
+				tokenBalance,
+				mint,
+				burn
 			}
 
 		}
 
-		function imgFromIpfs(imgHash) {
+		function imgFromIpfs(imgHash, imgId) {
 			node.files.get(imgHash, (err, files) => {
 				files.forEach((file) => {
 					console.log("File path: ", file.path);
 					console.log(">> File content: ", file.content.toString('utf8'));
 
 					// Test displaying img
-					document.getElementById("imgtest").src = file.content.toString('utf8');
+					document.getElementById("best" + imgId).src = file.content.toString('utf8');
 				});
 			});
 		}
