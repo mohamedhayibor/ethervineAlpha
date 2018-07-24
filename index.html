@@ -165,24 +165,30 @@
 
 			function getMintingPrice(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
+				let price;
 
 				memeInstance.getMintingPrice.call(numTokens, (err, res) => {
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						return res;
+						price = res.c[0] / (100 * 1000);
+						console.log(">>> Minting price: ", price);
+						return price;
 					}
 				});
 			}
 
 			function getBurningReward(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
+				let reward;
 
 				memeInstance.getBurningReward.call(numTokens, (err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						return res;
+						reward = res.c[0] / (100 * 1000);
+						console.log(">>> Burning reward: ", reward);
+						return reward;
 					}
 				}) 
 			}
@@ -225,7 +231,7 @@
 						// fmt of res: r {s: 1, e: 9, c: Array(1)}
 						// + div by 100 * 1000
 						balance = res.c[0] / (100 * 1000);
-						console.log(">>> Balance: ", balance);
+						console.log(">>> Balance in wei: ", balance);
 						return balance;
 					}
 				});
@@ -233,25 +239,31 @@
 
 			function memeTotalSupply(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
+				let totalSupply;
 
 				memeInstance.totalSupply.call((err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						return res;
+						totalSupply = res.c[0];
+						console.log(">>> Tokens TotalSupply: ", totalSupply);
+						return totalSupply;
 					}
 				});
 			}
 
-			// assumption for sender
+			// assumption [from] sender
 			function tokenBalance(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
+				let balance;
 
 				memeInstance.tokenBalances.call(userAddress, (err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						return res;
+						balance = res.c[0];
+						console.log(">>> Token Balance: ", balance);
+						return balance;
 					}
 				});
 			}
