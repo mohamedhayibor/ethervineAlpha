@@ -98,6 +98,8 @@
 	<script>
 		var userLatestImgBase64;
 		var allMemes;
+		// map 
+		var addrToBalances = {};
 
 		const memeRecorderABI = web3.eth.contract([{"constant":true,"inputs":[],"name":"getMemes","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"memeContracts","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ipfsHash","type":"string"},{"name":"_name","type":"string"}],"name":"addMeme","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]);
 
@@ -213,12 +215,47 @@
 				})
 			}
 
-			async function displayBestMemes() {
-				// for now let's assume the first memes are the most popular
-				const allIpfsHashes = allMemes.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
-				const receivedIpfsHashes = await Promise.all(allIpfsHashes);
+			function assignBalance(contractAddress) {
+				let memeInstance = memeABI.at(contractAddress);
+				let balance;
+				memeInstance.poolBalance.call((err, res) => {
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+						balance = res.c[0] / (100 * 1000);
+						// I feel terrible :(
+						addrToBalances[contractAddress] = balance;
+					}
+				});
+			}
 
-				console.log("receivedIpfsHashes: ", receivedIpfsHashes);
+			async function fetchAddrBalances() {
+				const allAddrBalances = allMemes.map(addr => assignBalance(addr));
+				await Promise.all(allAddrBalances);
+			}
+
+			async function displayBestMemes() {
+				let rankedmemes = [];
+
+				for (var addr in addrToBalances) {
+					rankedmemes.push([addr, addrToBalances[addr]]);
+				}
+
+				console.log("RankedMemes 1: ", rankedmemes);
+
+				rankedmemes.sort((a, b) => {
+					return b[1] - a[1];
+				});
+
+				console.log("RankedMemes 2: ", rankedmemes);				
+
+				// ditch the values > already ranked
+				rankedmemes.map(arr => arr[0]);
+
+				console.log("RankedMemes 3: ", rankedmemes);
+				
+				const displayRankedMemes = rankedmemes.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
+				await Promise.all(displayRankedMemes);
 			}
 
 			function memeBalance(contractAddress) {
@@ -308,6 +345,7 @@
 				getMintingPrice,
 				getBurningReward,
 				memeIpfsHash,
+				fetchAddrBalances,
 				displayBestMemes,
 				memeBalance,
 				memeTotalSupply,
