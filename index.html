@@ -217,12 +217,16 @@
 
 			function memeBalance(contractAddress) {
 				let memeInstance = memeABI.at(contractAddress);
-
+				let balance;
 				memeInstance.poolBalance.call((err, res) => {
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						return res;
+						// fmt of res: r {s: 1, e: 9, c: Array(1)}
+						// + div by 100 * 1000
+						balance = res.c[0] / (100 * 1000);
+						console.log(">>> Balance: ", balance);
+						return balance;
 					}
 				});
 			}
