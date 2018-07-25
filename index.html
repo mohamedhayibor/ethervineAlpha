@@ -111,6 +111,8 @@
 			var userAddress = web3js.eth.accounts[0];
 			// get all current memes -> allMemes
 			getMemes();
+
+			setTimeout(fetchAddrBalances, 2000);
 			// display current best performing memes > [Todo: Horrible to fix]
 			setTimeout(displayBestMemes, 4000);
 
@@ -235,26 +237,27 @@
 			}
 
 			async function displayBestMemes() {
-				let rankedmemes = [];
+				let memesToBalance = [];
+				let result = [];
 
 				for (var addr in addrToBalances) {
-					rankedmemes.push([addr, addrToBalances[addr]]);
+					memesToBalance.push([addr, addrToBalances[addr]]);
 				}
 
-				console.log("RankedMemes 1: ", rankedmemes);
+				console.log("memesToBalance 1: ", memesToBalance);
 
-				rankedmemes.sort((a, b) => {
+				memesToBalance.sort((a, b) => {
 					return b[1] - a[1];
 				});
 
-				console.log("RankedMemes 2: ", rankedmemes);				
+				console.log("memesToBalance 2: ", memesToBalance);				
 
 				// ditch the values > already ranked
-				rankedmemes.map(arr => arr[0]);
+				result = memesToBalance.map(arr => arr[0]);
 
-				console.log("RankedMemes 3: ", rankedmemes);
+				console.log("Result 3: ", result);
 				
-				const displayRankedMemes = rankedmemes.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
+				const displayRankedMemes = result.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
 				await Promise.all(displayRankedMemes);
 			}
 
@@ -340,6 +343,7 @@
 
 			// getters
 			return {
+				userAddress,
 				getMemes,
 				addMeme,
 				getMintingPrice,
