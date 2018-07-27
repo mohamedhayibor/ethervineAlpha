@@ -328,6 +328,8 @@
 						console.error("Error: ", err);
 					} else {
 						price = res.c[0] / (100 * 1000);
+						price = Math.ceil(price);
+						
 						console.log(">>> Minting price: ", price);
 						// return price;
 						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
@@ -390,13 +392,26 @@
 		}
 
 		function imgFromIpfs(imgHash, imgId) {
+			console.log("invoking imgFromIpfs");
+
 			node.files.get(imgHash, (err, files) => {
+				if (err) {
+					console.error(err);
+					console.log("IPFS fucked up, >>>>>>>>>>>>>>>>>>>");
+				}
+
+				console.log("Inside >>>  node.files.get", files);
+
 				files.forEach((file) => {
 					console.log("File path: ", file.path);
 					console.log(">> File content: ", file.content.toString('utf8'));
 
 					// Test displaying img
-					document.getElementById(`best${imgId}`).src = file.content.toString('utf8');
+					let domNode = document.getElementById(`best${imgId}`);
+
+					console.log(">>> domNode: ", domNode)
+
+					domNode.src = file.content.toString('utf8');
 				});
 			});
 		}
