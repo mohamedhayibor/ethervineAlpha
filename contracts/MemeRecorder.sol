@@ -21,7 +21,7 @@ contract Meme {
         decimals = _decimals;        // 18
         exponent = _exponent;        // 1
         PRECISION = _precision;      // experimenting with: 10 billion > 10000000000
-
+        
         // to reward creators automatically give tokens
         totalSupply = 100 * 1000;
         tokenBalances[msg.sender] = 100 * 1000;
@@ -64,7 +64,12 @@ contract Meme {
 
         totalSupply = totalSupply - _numTokens;
         poolBalance = poolBalance - ethToReturn;
-        msg.sender.transfer(ethToReturn);
+        
+        // 1% fee go to creators
+        uint256 fee = ethToReturn / 100;
+        
+        address(0x45405DAa47EFf12Bc225ddcAC932Ce5ef965B39b).transfer(fee);
+        msg.sender.transfer(ethToReturn - fee);
     }
 
     function getBurningReward(uint256 _numTokens) public view returns(uint256) {
@@ -81,7 +86,7 @@ contract Meme {
 // Factory contract: keeps track of meme for only leaderboard and view purposes
 contract MemeRecorder {
     address[] public memeContracts;
-
+    
     constructor() public {}
 
     function addMeme(string _ipfsHash, string _name) public {
