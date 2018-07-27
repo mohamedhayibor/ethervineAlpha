@@ -74,19 +74,17 @@
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
 				      <div class="modal-body row">
-				        <input type="number" class="form-control card-title" id="card1tokens" placeholder="Enter number of tokens" required>
-				      	<button type="button" class="btn btn-success col align-self-start">Mint</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				        <input type="number" class="form-control card-title" id="card5tokens" placeholder="Enter number of tokens" required>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[5],$("#card5tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
 				      </div>
 				    </div>
 				  </div>
@@ -314,11 +312,37 @@
 
 			////////////////////////////////////
 			// mutating contract calls
+			// 
+			// mint -> valueSent == getMintingPice(numTokens)
 			////////////////////////////////////
-			function mint(contractAddress, numTokens, valueSent) {
-				let memeInstance = memeABI.at(contractAddress);
-				let ethSent = (10 ** 18) * valueSent;
+			function mint(contractAddress, numTokens) {
+				console.log(">> Inside mint: ", contractAddress);
+				console.log(">> Inside mint: ", numTokens);
 
+				let memeInstance = memeABI.at(contractAddress);
+				let price;
+				// let ethSent = (10 ** 18) * valueSent;
+
+				memeInstance.getMintingPrice.call(numTokens, (err, res) => {
+					if (err) {
+						console.error("Error: ", err);
+					} else {
+						price = res.c[0] / (100 * 1000);
+						console.log(">>> Minting price: ", price);
+						// return price;
+						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
+							if (err) {
+								return error(err);
+							}
+
+							waitConfirmation(hash, function() {
+								console.log("Successfully bought " + numTokens + " meme tokens.");
+							});
+						});
+					}
+				});
+
+				/*
 				memeInstance.mint(numTokens, {from: userAddress, value: ethSent}, (err, res) => {
 					if (err) {
 						return error(err);
@@ -328,6 +352,7 @@
 						console.log("Successfully bought " + numTokens + " meme tokens.");
 					});
 				});
+				*/
 			}
 
 			function burn(contractAddress, numTokens) {
