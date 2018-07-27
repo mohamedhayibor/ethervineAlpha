@@ -255,7 +255,7 @@
 				console.log("memesToBalance 2: ", memesToBalance);				
 
 				// ditch the values > already ranked
-				rankedMemesByBalance = memesToBalance.map(arr => arr[0]);
+				rankedMemesByBalance = memesToBalance.slice(0, 6).map(arr => arr[0]);
 
 				console.log("Result 3: ", rankedMemesByBalance);
 				
@@ -329,7 +329,7 @@
 					} else {
 						price = res.c[0] / (100 * 1000);
 						price = Math.ceil(price);
-						
+
 						console.log(">>> Minting price: ", price);
 						// return price;
 						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
