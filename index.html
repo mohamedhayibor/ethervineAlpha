@@ -17,7 +17,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
 	<script type="text/javascript">
-		const node = new Ipfs({ host: "ipfs.infura.io", port: 5001, protocol: 'https'})
+		const node = new Ipfs({ host: "ipfs.infura.io", port: 5001, protocol: 'https'});
 	</script>
 </head>
 
@@ -47,30 +47,154 @@
 		<div id="bestMemes">
 			<!-- first deck -->
 			<div class="card-deck">
+
+			  <!-- card 1 -->
 			  <div class="card">
-			    <img class="card-img-top" id="best0" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			  	<a data-toggle="modal" data-target="#modal0">
+			    	<img class="card-img-top" id="best0" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			    </a>
+
+			    <div class="modal fade" id="modal0" tabindex="-1" role="dialog" aria-labelledby="modal0Label" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body row">
+				        <input type="number" class="form-control card-title" id="card0tokens" placeholder="Enter number of tokens" required>
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[0],$("#card0tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			  </div>
+
+			  <!-- card 2 -->
 			  <div class="card">
-			    <img class="card-img-top" id="best1" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			  	<a data-toggle="modal" data-target="#modal1">
+			    	<img class="card-img-top" id="best1" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			    </a>
+
+			    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body row">
+				        <input type="number" class="form-control card-title" id="card1tokens" placeholder="Enter number of tokens" required>
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[1],$("#card1tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			  </div>
+
+			  <!-- card 3 -->
 			  <div class="card">
-			    <img class="card-img-top" id="best2" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			  	<a data-toggle="modal" data-target="#modal2">
+			    	<img class="card-img-top" id="best2" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			    </a>
+
+			    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2Label" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body row">
+				        <input type="number" class="form-control card-title" id="card2tokens" placeholder="Enter number of tokens" required>
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[2],$("#card2tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			  </div>
+
 			</div>
+
 			<!-- Second deck --><br>
 			<div class="card-deck">
+
+			  <!-- card 4 -->
 			  <div class="card">
-			    <img class="card-img-top" id="best3" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			  	<a data-toggle="modal" data-target="#modal3">
+			    	<img class="card-img-top" id="best3" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			    </a>
+
+			    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="modal3Label" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body row">
+				        <input type="number" class="form-control card-title" id="card3tokens" placeholder="Enter number of tokens" required>
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[3],$("#card3tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			  </div>
+
+			  <!-- card 5 -->
 			  <div class="card">
-			    <img class="card-img-top" id="best4" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			  	<a data-toggle="modal" data-target="#modal4">
+			    	<img class="card-img-top" id="best4" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
+			    </a>
+
+			    <div class="modal fade" id="modal4" tabindex="-1" role="dialog" aria-labelledby="modal4Label" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body row">
+				        <input type="number" class="form-control card-title" id="card4tokens" placeholder="Enter number of tokens" required>
+				      </div>
+				      <div class="modal-footer">
+				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[4],$("#card4tokens").val())'>Mint</button>
+				      	<button type="button" class="btn btn-danger col align-self-end">Burn</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			  </div>
+
+			  <!-- card 6 -->
 			  <div class="card">
-			  	<a data-toggle="modal" data-target="#exampleModal">
+			  	<a data-toggle="modal" data-target="#modal5">
 			    	<img class="card-img-top" id="best5" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e91a3dcf-c15a-441a-b369-996922364cdc-profile_image-300x300.png" alt="Card image cap">
 			    </a>
 
-			    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			    <div class="modal fade" id="modal5" tabindex="-1" role="dialog" aria-labelledby="modal5Label" aria-hidden="true">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
@@ -90,6 +214,7 @@
 				  </div>
 				</div>
 			  </div>
+
 			</div>
 		</div>
 	</div>
@@ -121,7 +246,7 @@
 
 			function addMeme(ipfsHash, name) {
 				// hardcoded rinkeby test MemeRecorder contract
-				var memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
+				var memeRecorderInstance = memeRecorderABI.at("0xD34b2EC1a74324b38C3305f59455d4813d3cd0B7");
 
 				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, (err, hash) => {
 					if (err) {
@@ -159,7 +284,7 @@
 			// Get calls on smart contract >> free
 			//////////////////////////////////////
 			function getMemes() {
-				let memeRecorderInstance = memeRecorderABI.at("0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5");
+				let memeRecorderInstance = memeRecorderABI.at("0xd34b2ec1a74324b38c3305f59455d4813d3cd0b7");
 
 				memeRecorderInstance.getMemes.call((err, res) => {
 					if (err) {
