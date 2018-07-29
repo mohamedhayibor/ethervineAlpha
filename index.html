@@ -30,6 +30,8 @@
 		</div> -->
 		<br>
 
+		<div id="notUsingMetamask" rol="alert"></div>
+
 		<div class="row justify-content-md-center">
 			<canvas width="500" height="500"></canvas>
 			
@@ -223,6 +225,23 @@
 
 
 	<script>
+		// web3 init
+		window.addEventListener('load', function () {
+			// checking if web3 has been injected by the browser
+			if (typeof web3 !== 'undefined') {
+				// Use Metamask's provider
+				web3js = new Web3(web3.currentProvider);
+				console.log("Using metamask");
+			} else {
+				$("#notUsingMetamask").addClass("alert alert-warning")
+					.text("Install Metamask in order to use this site :(");
+				console.log("No web3, try installing Metamask");
+				web3js = new Web3(new Web3.providers.HttpProvider("https://infura.io/"));
+			}
+
+			startApp();
+		});
+
 		var userLatestImgBase64;
 		var allMemes;
 		// map 
@@ -648,20 +667,6 @@
 		var ctx = canvas.getContext("2d");
 
 		// TODO: fill with a grey preview telling the user to upload an image
-
-		// web3 init
-		window.addEventListener('load', function () {
-			// checking if web3 has been injected by the browser
-			if (typeof web3 !== 'undefined') {
-				// Use Metamask's provider
-				web3js = new Web3(web3.currentProvider);
-			} else {
-				console.log("No web3, try installing Metamask");
-				web3js = new Web3(new Web3.providers.HttpProvider("https://infura.io/"));
-			}
-
-			startApp();
-		});
 	</script>
 </body>
 </html>
