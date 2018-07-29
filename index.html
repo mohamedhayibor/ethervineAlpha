@@ -303,7 +303,10 @@
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						price = res.c[0] / (100 * 1000);
+						// testing getMintingPrice
+						console.log(">>>> Res: ", res);
+
+						price = Number(res);
 						console.log(">>> Minting price: ", price);
 						return price;
 					}
@@ -318,7 +321,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						reward = res.c[0] / (100 * 1000);
+						reward = Number(res);
 						console.log(">>> Burning reward: ", reward);
 						return reward;
 					}
@@ -352,8 +355,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						balance = res.c[0] / (100 * 1000);
-						// I feel terrible :(
+						balance = Number(res);
 						addrToBalances[contractAddress] = balance;
 					}
 				});
@@ -395,9 +397,10 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
+						console.log(">>>> Res memeBalance: ", res);
 						// fmt of res: r {s: 1, e: 9, c: Array(1)}
 						// + div by 100 * 1000
-						balance = res.c[0] / (100 * 1000);
+						balance = Number(res);
 						console.log(">>> Balance in wei: ", balance);
 						return balance;
 					}
@@ -412,7 +415,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						totalSupply = res.c[0];
+						totalSupply = Number(res);
 						console.log(">>> Tokens TotalSupply: ", totalSupply);
 						return totalSupply;
 					}
@@ -428,7 +431,7 @@
 					if (err) {
 						console.log("Error: ", err);
 					} else {
-						balance = res.c[0];
+						balance = Number(res);
 						console.log(">>> Token Balance: ", balance);
 						return balance;
 					}
@@ -444,6 +447,11 @@
 				console.log(">> Inside mint: ", contractAddress);
 				console.log(">> Inside mint: ", numTokens);
 
+				if (numTokens == 0) {
+					console.log("Number of Tokens can't be 0!");
+					return;
+				}
+
 				let memeInstance = memeABI.at(contractAddress);
 				let price;
 				// let ethSent = (10 ** 18) * valueSent;
@@ -452,11 +460,11 @@
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						price = res.c[0] / (100 * 1000);
-						price = Math.ceil(price);
+						price = Number(res);
 
 						console.log(">>> Minting price: ", price);
-						// return price;
+
+						/*
 						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
 							if (err) {
 								return error(err);
@@ -466,20 +474,10 @@
 								console.log("Successfully bought " + numTokens + " meme tokens.");
 							});
 						});
+						*/
 					}
 				});
 
-				/*
-				memeInstance.mint(numTokens, {from: userAddress, value: ethSent}, (err, res) => {
-					if (err) {
-						return error(err);
-					}
-
-					waitConfirmation(hash, function() {
-						console.log("Successfully bought " + numTokens + " meme tokens.");
-					});
-				});
-				*/
 			}
 
 			function burn(contractAddress, numTokens) {
