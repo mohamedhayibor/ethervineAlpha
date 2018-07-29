@@ -248,12 +248,14 @@
 				// hardcoded rinkeby test MemeRecorder contract
 				var memeRecorderInstance = memeRecorderABI.at("0xD34b2EC1a74324b38C3305f59455d4813d3cd0B7");
 
-				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, (err, hash) => {
+				memeRecorderInstance.addMeme(ipfsHash, name, {from: userAddress}, (err, txHash) => {
 					if (err) {
 						return error(err);
 					}
 
-					waitConfirmation(hash, function () {
+					console.log("txHash: ", txHash);
+
+					waitConfirmation(txHash, function () {
 						console.log("Successfully added the Meme.");
 					});
 				});
@@ -463,12 +465,14 @@
 
 						console.log(">>> Minting price: ", price);
 
-						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
+						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, txHash) => {
 							if (err) {
 								return error(err);
 							}
 
-							waitConfirmation(hash, function() {
+							console.log("txHash: ", txHash);
+
+							waitConfirmation(txHash, function() {
 								console.log("Successfully bought " + numTokens + " meme tokens.");
 							});
 						});
@@ -487,14 +491,14 @@
 					} else {
 						burnReward = Number(res);
 					
-						memeInstance.burn(numTokens, {from: userAddress}, (err, res) => {
+						memeInstance.burn(numTokens, {from: userAddress}, (err, txHash) => {
 							if (err) {
 								return error(err);
 							}
 
-							console.log("BurnRes: ", res);
+							console.log("txHash: ", txHash);
 
-							waitConfirmation(res.hash, function() {
+							waitConfirmation(txHash, function() {
 								console.log("Successfully burned " + numTokens + " meme tokens.");
 							});
 						});	
