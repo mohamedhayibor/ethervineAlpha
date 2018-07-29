@@ -68,7 +68,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[0],$("#card0tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[0],$("#card0tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -95,7 +95,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[1],$("#card1tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[1],$("#card1tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -122,7 +122,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[2],$("#card2tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[2],$("#card2tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -154,7 +154,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[3],$("#card3tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[3],$("#card3tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -181,7 +181,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[4],$("#card4tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[4],$("#card4tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -208,7 +208,7 @@
 				      </div>
 				      <div class="modal-footer">
 				      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint(rankedMemesByBalance[5],$("#card5tokens").val())'>Buy</button>
-				      	<button type="button" class="btn btn-danger col align-self-end">Sell</button>
+				      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn(rankedMemesByBalance[5],$("#card5tokens").val())'>Sell</button>
 				      </div>
 				    </div>
 				  </div>
@@ -479,15 +479,26 @@
 
 			function burn(contractAddress, numTokens) {
 				let memeInstance = memeABI.at(contractAddress);
+				let burnReward;
 
-				memeInstance.burn(numTokens, {from: userAddress}, (err, res) => {
+				memeInstance.getBurningReward.call(numTokens, (err, res) => {
 					if (err) {
-						return error(err);
-					}
+						console.log("Error: ", err);
+					} else {
+						burnReward = Number(res);
+					
+						memeInstance.burn(numTokens, {from: userAddress}, (err, res) => {
+							if (err) {
+								return error(err);
+							}
 
-					waitConfirmation(hash, function() {
-						console.log("Successfully burned " + numTokens + " meme tokens.");
-					});
+							console.log("BurnRes: ", res);
+
+							waitConfirmation(res.hash, function() {
+								console.log("Successfully burned " + numTokens + " meme tokens.");
+							});
+						});	
+					}
 				});
 			}
 
