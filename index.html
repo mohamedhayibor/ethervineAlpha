@@ -454,7 +454,6 @@
 
 				let memeInstance = memeABI.at(contractAddress);
 				let price;
-				// let ethSent = (10 ** 18) * valueSent;
 
 				memeInstance.getMintingPrice.call(numTokens, (err, res) => {
 					if (err) {
@@ -464,7 +463,6 @@
 
 						console.log(">>> Minting price: ", price);
 
-						/*
 						memeInstance.mint(numTokens, {from: userAddress, value: price}, (err, res) => {
 							if (err) {
 								return error(err);
@@ -474,7 +472,6 @@
 								console.log("Successfully bought " + numTokens + " meme tokens.");
 							});
 						});
-						*/
 					}
 				});
 
