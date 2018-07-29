@@ -1,11 +1,38 @@
 pragma solidity ^0.4.24;
 
+library CheckOverflows {
+    function add(uint256 n1, uint256 n2) internal pure returns(uint256 n3) {
+        n3 = n1 + n2;
+        require(n3 >= n1);
+        return n3;
+    }
+
+    function sub(uint256 n1, uint256 n2) internal pure returns(uint256) {
+        require(n2 <= n1);
+        return n1 - n2;
+    }
+
+    function mul(uint256 n1, uint256 n2) internal pure returns(uint256 n3) {
+        if (n1 == 0 || n2 == 0) {
+            return 0;
+        }
+
+        n3 = n1 * n2;
+        require(n3 / n1 == n2);
+        return n3;
+    }
+
+    function div(uint256 n1, uint256 n2) internal pure returns(uint256) {
+        return n1 / n2;
+    }
+}
+
 // PolynomialBonding curve
 // Each meme is independent on its own on the eth blockchain
 contract Meme {
     string public ipfsHash;
     address public creator; // aka owner
-    uint8 exponent;
+    uint256 exponent;
     uint256 PRECISION;
     uint256 public totalSupply;
     string public name;
@@ -13,6 +40,8 @@ contract Meme {
 
     // amount of wei the smart contract holds
     uint256 public poolBalance;
+
+    using CheckOverflows for uint256;
 
     constructor(string _ipfsHash, address _creator, string _name, uint8 _decimals, uint8 _exponent, uint256 _precision) public {
         ipfsHash = _ipfsHash;
@@ -22,9 +51,9 @@ contract Meme {
         exponent = _exponent;        // 1
         PRECISION = _precision;      // experimenting with: 10 billion > 10000000000
 
-        // to reward creators automatically give tokens
-        totalSupply = 100 * 1000;
-        tokenBalances[msg.sender] = 100 * 1000;
+        // to reward creators automatically give tokens 100 * 1000
+        totalSupply = 100000;
+        tokenBalances[msg.sender] = 100000;
     }
 
     // tokens owned by each address
@@ -32,9 +61,9 @@ contract Meme {
 
     // Calculate the integral from 0 to t (number to integrate to)
     function curveIntegral(uint256 _t) internal returns(uint256) {
-        uint256 nexp = exponent + 1;
+        uint256 nexp = exponent.add(1);
         // calculate integral t^exponent
-        return ((PRECISION / nexp) * (_t ** nexp)) / PRECISION;
+        return PRECISION.div(nexp).mul(_t ** nexp).div(PRECISION);
     }
 
     // minting new tokens > aka voting
@@ -42,18 +71,18 @@ contract Meme {
         uint256 priceForTokens = getMintingPrice(_numTokens);
         require(msg.value >= priceForTokens, "Not enough value for total price of tokens");
 
-        totalSupply = totalSupply + _numTokens;
-        tokenBalances[msg.sender] = tokenBalances[msg.sender] + _numTokens;
-        poolBalance = poolBalance + priceForTokens;
+        totalSupply = totalSupply.add(_numTokens);
+        tokenBalances[msg.sender] = tokenBalances[msg.sender].add(_numTokens);
+        poolBalance = poolBalance.add(priceForTokens);
 
         // send back the change
         if (msg.value > priceForTokens) {
-            msg.sender.transfer(msg.value - priceForTokens);
+            msg.sender.transfer(msg.value.sub(priceForTokens));
         }
     }
 
     function getMintingPrice(uint256 _numTokens) public view returns(uint256) {
-        return curveIntegral(totalSupply + _numTokens) - poolBalance;
+        return curveIntegral(totalSupply.add(_numTokens)).sub(poolBalance);
     }
 
     // burning tokens >> eth to return
@@ -62,18 +91,18 @@ contract Meme {
 
         uint256 ethToReturn = getBurningReward(_numTokens);
 
-        totalSupply = totalSupply - _numTokens;
-        poolBalance = poolBalance - ethToReturn;
+        totalSupply = totalSupply.sub(_numTokens);
+        poolBalance = poolBalance.sub(ethToReturn);
 
         // 3% fee go to creators
-        uint256 fee = (ethToReturn / 100) * 3;
+        uint256 fee = ethToReturn.div(100).mul(3);
 
         address(0x45405DAa47EFf12Bc225ddcAC932Ce5ef965B39b).transfer(fee);
-        msg.sender.transfer(ethToReturn - fee);
+        msg.sender.transfer(ethToReturn.sub(fee));
     }
 
     function getBurningReward(uint256 _numTokens) public view returns(uint256) {
-        return poolBalance - (curveIntegral(totalSupply - _numTokens));
+        return poolBalance.sub(curveIntegral(totalSupply.sub(_numTokens)));
     }
 
     function kill() public {
