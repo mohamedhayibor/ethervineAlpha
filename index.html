@@ -225,9 +225,32 @@
 
 		<div class="jumbotron text-center">
 			<h2>Trade a Meme</h2>
-			<form>
 			<input id="memeAddress" type="text" class="form-control col-md-6 col-md-offset-3 text-center" placeholder="Enter meme's address">
-			</form>
+			<br>
+
+			<a data-toggle="modal" data-target="#modal6">
+				<img id="memeAddressImg" src="" class="img-fluid">
+			</a>
+
+			<div class="modal fade" id="modal6" tabindex="-1" role="dialog" aria-labelledby="modal6Label" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Eth amount is auto calculated</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body row">
+			        <input type="number" class="form-control card-title" id="card6tokens" placeholder="Enter number of tokens" required>
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="button" class="btn btn-success col align-self-start" onClick='startApp().mint($("#memeAddress").val(),$("#card6tokens").val())'>Buy</button>
+			      	<button type="button" class="btn btn-danger col align-self-end" onClick='startApp().burn($("#memeAddress").val(),$("#card6tokens").val())'>Sell</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 
 			<div id="memeBalance" rol="alert"></div>
 			<div id="tokenBalance" rol="alert"></div>
@@ -298,7 +321,7 @@
 		    			let totalSupply = Number(supply);
 
 		    			$("#memeBalance").addClass("alert alert-warning")
-		    				.text("Meme balance: " + balance + " | Total supply: " + totalSupply);
+		    				.text("Meme balance: " + balance + " (wei) | Total supply: " + totalSupply);
 		    		});
 		    	});
 
@@ -306,7 +329,7 @@
 		    		let tokenBalance = Number(bal);
 
 		    		$("#tokenBalance").addClass("alert alert-warning")
-		    			.text("You have " + tokenBalance + " on this meme.");
+		    			.text("You have " + tokenBalance + " tokens on this meme.");
 		    	});
 		    });
 
