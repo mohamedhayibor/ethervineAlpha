@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<style>
-		#image-container {
-			display: flex;
+		#memeAddress {
+			margin: 0 auto;
 		}
 	</style>
 
@@ -218,8 +218,22 @@
 			  </div>
 
 			</div>
+			<!-- end of second deck -->
+		</div>
+		<!-- end of best Memes -->
+		<br>
+
+		<div class="jumbotron text-center">
+			<h2>Trade a Meme</h2>
+			<form>
+			<input id="memeAddress" type="text" class="form-control col-md-6 col-md-offset-3 text-center" placeholder="Enter meme's address">
+			</form>
+
+			<div id="memeBalance" rol="alert"></div>
+			<div id="tokenBalance" rol="alert"></div>
 		</div>
 	</div>
+	<!-- end of container -->
 
 <!-- Modal -->
 
@@ -263,6 +277,43 @@
 			// display current best performing memes > [Todo: Horrible to fix]
 			setTimeout(displayBestMemes, 4000);
 
+			////////////////////////////
+			// logic for memeAddress
+			////////////////////////////
+			$("#memeAddress").on('keyup', function() {
+				var memeAddress = $("#memeAddress").val().trim();
+		    	if (memeAddress < 40) {
+		    		console.log(">> Invalid address, Stop everything.");
+		    		return; // return everything
+		    	}
+		    	if (memeAddress.length == 40) memeAddress = "0x" + memeAddress;
+
+		    	let memeInstance = memeABI.at(memeAddress);
+
+		    	// retrieve meme balance and totalSupply and display info-alert
+		    	memeInstance.poolBalance.call( (err, bal) => {
+		    		let balance = Number(bal);
+
+		    		memeInstance.totalSupply.call( (err, supply) => {
+		    			let totalSupply = Number(supply);
+
+		    			$("#memeBalance").addClass("alert alert-warning")
+		    				.text("Meme balance: " + balance + " | Total supply: " + totalSupply);
+		    		});
+		    	});
+
+		    	memeInstance.tokenBalances.call(userAddress, (err, bal) => {
+		    		let tokenBalance = Number(bal);
+
+		    		$("#tokenBalance").addClass("alert alert-warning")
+		    			.text("You have " + tokenBalance + " on this meme.");
+		    	});
+		    });
+
+
+			/////////////////////////////////
+			// Smart contract interactions
+			/////////////////////////////////
 			function addMeme(ipfsHash, name) {
 				// hardcoded rinkeby test MemeRecorder contract
 				var memeRecorderInstance = memeRecorderABI.at("0xD34b2EC1a74324b38C3305f59455d4813d3cd0B7");
