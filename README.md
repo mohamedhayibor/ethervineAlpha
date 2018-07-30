@@ -4,36 +4,14 @@
 
 > [Master branch testing with Rinkeby](https://mohamedhayibor.github.io/ethervineAlpha/)
 
-Technical scope:
----
 
+FAQ
+----
+
+* Users can only create or trade memes
+* No shorting / only buying or selling of tokens
 * Each meme is a PolynomialBondingCurve
-* Memes are non tradable by users
-* Viewers (admirers) buy tokens from contract (bonding curve mechanism) to vote
-
-> For each meme traded on mint and burn, creator can buy more of their meme if they feel like their meme will perform great.
-
-
-Limitations
----
-
-Users can only do 3 things.
-
-```
- MemeRecorder -> Add Meme
-
- Meme         -> Mint or Burn
-```
-
-
-Only 4 user Buttons
----
-
-* Choose image
-* Create Meme
-* Mint
-* Burn
-
+* Memes are non tradable between users - only to the smart contract
 
 Testing Rinkeby Accts
 ------
