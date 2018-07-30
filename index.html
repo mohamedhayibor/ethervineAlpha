@@ -313,6 +313,28 @@
 
 		    	let memeInstance = memeABI.at(memeAddress);
 
+		    	memeInstance.ipfsHash.call((err, imgHash) => {
+
+		    		console.log("Got content: ", imgHash);
+
+					if (err) {
+						console.log("Error: ", err);
+					} else {
+
+						node.files.get(imgHash, (err, files) => {
+							if (err) {
+								console.error(err);
+							}
+
+							console.log("Got content: ", file.content.toString('utf8'));
+
+							files.forEach((file) => {
+								document.getElementById("memeAddressImg").src = file.content.toString('utf8');
+							});
+						});
+					}
+				})
+
 		    	// retrieve meme balance and totalSupply and display info-alert
 		    	memeInstance.poolBalance.call( (err, bal) => {
 		    		let balance = Number(bal);
