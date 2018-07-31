@@ -31,6 +31,7 @@
 		<br>
 
 		<div id="notUsingMetamask" rol="alert"></div>
+		<div id="txStatus"></div>
 
 		<div class="row justify-content-md-center">
 			<canvas width="500" height="500"></canvas>
@@ -364,9 +365,12 @@
 					}
 
 					console.log("txHash: ", txHash);
+					document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 					waitConfirmation(txHash, function () {
 						console.log("Successfully added the Meme.");
+						document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Successfully added ' + name + ' Meme.!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+
 					});
 				});
 			}
@@ -581,9 +585,11 @@
 							}
 
 							console.log("txHash: ", txHash);
+							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
 								console.log("Successfully bought " + numTokens + " meme tokens.");
+								document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Successfully bought ' + numTokens + ' tokens!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 							});
 						});
 					}
@@ -607,9 +613,11 @@
 							}
 
 							console.log("txHash: ", txHash);
+							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
 								console.log("Successfully burned " + numTokens + " meme tokens.");
+								document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Successfully burned ' + numTokens + '!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 							});
 						});	
 					}
