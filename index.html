@@ -315,7 +315,7 @@
 
 		    	memeInstance.ipfsHash.call((err, imgHash) => {
 
-		    		console.log("Got content: ", imgHash);
+		    		console.log("Got imgHash: ", imgHash);
 
 					if (err) {
 						console.log("Error: ", err);
@@ -326,7 +326,7 @@
 								console.error(err);
 							}
 
-							console.log("Got content: ", file.content.toString('utf8'));
+							console.log("Got ipfs img content: ", file.content.toString('utf8'));
 
 							files.forEach((file) => {
 								document.getElementById("memeAddressImg").src = file.content.toString('utf8');
