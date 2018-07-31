@@ -252,6 +252,7 @@
 			  </div>
 			</div>
 
+			<br>
 			<div id="memeBalance" rol="alert"></div>
 			<div id="tokenBalance" rol="alert"></div>
 		</div>
@@ -314,9 +315,6 @@
 		    	let memeInstance = memeABI.at(memeAddress);
 
 		    	memeInstance.ipfsHash.call((err, imgHash) => {
-
-		    		console.log("Got imgHash: ", imgHash);
-
 					if (err) {
 						console.log("Error: ", err);
 					} else {
@@ -326,14 +324,11 @@
 								console.error(err);
 							}
 
-							console.log("Got ipfs img content: ", file.content.toString('utf8'));
-
-							files.forEach((file) => {
-								document.getElementById("memeAddressImg").src = file.content.toString('utf8');
-							});
+							let selectedMeme = files[0].content;
+							document.getElementById("memeAddressImg").src = selectedMeme.toString('utf8');
 						});
 					}
-				})
+				});
 
 		    	// retrieve meme balance and totalSupply and display info-alert
 		    	memeInstance.poolBalance.call( (err, bal) => {
