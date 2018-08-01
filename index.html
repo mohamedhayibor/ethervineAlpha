@@ -381,7 +381,7 @@
 
 					waitConfirmation(txHash, function () {
 						console.log("Successfully added the Meme.");
-						document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Successfully added ' + name + ' Meme.!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+						document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Successfully added ' + name + ' Meme!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 					});
 				});
@@ -662,10 +662,7 @@
 			node.files.get(imgHash, (err, files) => {
 				if (err) {
 					console.error(err);
-					console.log("IPFS fucked up, >>>>>>>>>>>>>>>>>>>");
 				}
-
-				console.log("Inside >>>  node.files.get", files);
 
 				files.forEach((file) => {
 					console.log("File path: ", file.path);
@@ -776,8 +773,6 @@
 
 		var canvas = document.querySelector('canvas');
 		var ctx = canvas.getContext("2d");
-
-		// TODO: fill with a grey preview telling the user to upload an image
 	</script>
 </body>
 </html>
