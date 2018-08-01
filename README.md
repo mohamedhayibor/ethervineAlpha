@@ -12,12 +12,23 @@ FAQ
 * No shorting / only buying or selling of tokens
 * Each meme is a PolynomialBondingCurve
 * Memes are non tradable between users - only to the smart contract
+* Each meme is its own communal deposit
+* Curate memes with your own proportional backing
+
+Interesting reads:
+-----
+
+* [Introduction to curation markets by Simondlr](https://medium.com/@simondlr/introducing-curation-markets-trade-popularity-of-memes-information-with-code-70bf6fed9881)
+* [Not Cash but Work In](https://media.consensys.net/developing-micro-economies-via-work-in-not-buy-in-9f15b28f4126)
 
 Testing Rinkeby Accts
 ------
 
 1. [Meme Recorder](https://rinkeby.etherscan.io/address/0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5)
 2. [meme exple](https://rinkeby.etherscan.io/address/0xdb47329fb71dc1dfe3245610d6f8d1b59cc28eef)
+
+
+The hypothesis we're testing is that meme makers will use our site instead of others because they can earn money with this.
 
 
 Dev setup:
