@@ -34,6 +34,8 @@ The hypothesis we're testing is that meme makers will use our site instead of ot
 Dev setup:
 ========
 
+> You need [Metamask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US) to use the site.
+
 For local development, you must run a local server for security reasons and constraints on [metamask](https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#globe_with_meridians-https---web-server-required), IPFS...
 
 Easy/fast way: go to source path
