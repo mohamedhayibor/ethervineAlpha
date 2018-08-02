@@ -60,6 +60,7 @@ contract Meme {
     mapping(address => uint256) public tokenBalances;
 
     // Calculate the integral from 0 to t (number to integrate to)
+    // https://github.com/CryptoAgainstHumanity/crypto-against-humanity/blob/master/ethereum/contracts/WhiteCard.sol#L249
     function curveIntegral(uint256 _t) internal returns(uint256) {
         uint256 nexp = exponent.add(1);
         // calculate integral t^exponent
@@ -94,7 +95,7 @@ contract Meme {
         totalSupply = totalSupply.sub(_numTokens);
         poolBalance = poolBalance.sub(ethToReturn);
 
-        // 3% fee go to creators
+        // 3% fee go to site creators, the rest to former tokens owner
         uint256 fee = ethToReturn.div(100).mul(3);
 
         address(0x45405DAa47EFf12Bc225ddcAC932Ce5ef965B39b).transfer(fee);
