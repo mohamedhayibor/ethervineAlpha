@@ -27,8 +27,7 @@ Testing Rinkeby Accts
 1. [Meme Recorder](https://rinkeby.etherscan.io/address/0xb93eddce16ae43790eafd7ebee8a5bcf40f46bb5)
 2. [meme exple](https://rinkeby.etherscan.io/address/0xdb47329fb71dc1dfe3245610d6f8d1b59cc28eef)
 
-
-The hypothesis we're testing is that meme makers will use our site instead of others because they can earn money with this.
+Currently testing the hypothesis: would meme makers use this with existing tools if they can earn money from it?
 
 
 Dev setup:
