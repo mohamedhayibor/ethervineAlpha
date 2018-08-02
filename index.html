@@ -377,7 +377,7 @@
 					}
 
 					console.log("txHash: ", txHash);
-					document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+					document.querySelector("#txStatus").innerHTML = '<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong>\nTransaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 					waitConfirmation(txHash, function () {
 						console.log("Successfully added the Meme.");
