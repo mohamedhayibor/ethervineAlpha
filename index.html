@@ -569,7 +569,7 @@
 						return error(err);
 					}
 
-					document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong>\nTransaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+					document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong>\nTransaction hash: <a href="https://rinkeby.etherscan.io/tx/' + txHash +'">' + txHash + '</a> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 					waitConfirmation(txHash, function () {
 						document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Successfully added ' + name + ' Meme!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
@@ -787,7 +787,7 @@
 								return error(err);
 							}
 
-							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: <a href="https://rinkeby.etherscan.io/tx/' + txHash +'">' + txHash + '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
 								console.log("Successfully bought " + numTokens + " meme tokens.");
@@ -818,7 +818,7 @@
 								return error(err);
 							}
 
-							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: ' + txHash +' <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: <a href="https://rinkeby.etherscan.io/tx/' + txHash +'">' + txHash + '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
 								console.log("Successfully burned " + numTokens + " meme tokens.");
