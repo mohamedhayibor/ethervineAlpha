@@ -45,10 +45,21 @@
 			<canvas width="500" height="500"></canvas>
 			
 			<div class="userParams">
-				<input type="file" id="file" class="btn btn-light">
-				<input id="memeName" type="text" class="form-control" placeholder="Enter name..." required><br>
-				<input id="topText" type="text" class="form-control" placeholder="Enter top line..."><br>
-				<input id="bottomText" type="text" class="form-control" placeholder="Enter bottom line..."><br>
+				<div class="form-group">
+					<input type="file" id="file" class="btn btn-light">
+				</div>
+				<div class="form-group">
+					<label for="memeName">MEME NAME</label>
+					<input id="memeName" type="text" class="form-control" placeholder="Enter name..." required>
+				</div>
+				<div class="form-group">
+					<label for="topText">MEME TOP LINE</label>
+					<input id="topText" type="text" class="form-control" placeholder="Enter top line...">
+				</div>
+				<div class="form-group">
+					<label for="bottomText">MEME BOTTOM LINE</label>
+					<input id="bottomText" type="text" class="form-control" placeholder="Enter bottom line...">
+				</div>
 				<button id="saveBtn" class="btn btn-success">Create Meme</button>
 		 	</div>
 		</div>
