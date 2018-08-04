@@ -984,6 +984,21 @@
 
 		var canvas = document.querySelector('canvas');
 		var ctx = canvas.getContext("2d");
+
+		//////////////
+		// initial art
+		//////////////
+		
+		// red
+		ctx.fillStyle = 'rgb(200, 0, 0)';
+        ctx.fillRect(50, 50, 300, 300);
+        //violet
+        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+        ctx.fillRect(150, 150, 300, 300);
+
+        ctx.textAlign = "center";
+        ctx.font = "30pt Impact";
+		ctx.strokeText('Upload an image', 200, 300);
 	</script>
 </body>
 </html>
