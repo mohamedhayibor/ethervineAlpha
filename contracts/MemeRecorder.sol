@@ -36,14 +36,14 @@ contract Meme {
     uint256 PRECISION;
     uint256 public totalSupply;
     string public name;
-    uint8 public decimals;
+    uint256 public decimals;
 
     // amount of wei the smart contract holds
     uint256 public poolBalance;
 
     using CheckOverflows for uint256;
 
-    constructor(string _ipfsHash, address _creator, string _name, uint8 _decimals, uint8 _exponent, uint256 _precision) public {
+    constructor(string _ipfsHash, address _creator, string _name, uint256 _decimals, uint256 _exponent, uint256 _precision) public {
         ipfsHash = _ipfsHash;
         creator = _creator;
         name = _name;
