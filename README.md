@@ -14,6 +14,7 @@ FAQ
 * Memes are non tradable between users - only to the smart contract
 * Each meme is its own communal deposit
 * Curate memes with your own proportional backing
+* Users can also design their memes with whatever tools at their disposal and submit them
 
 Interesting reads:
 -----
