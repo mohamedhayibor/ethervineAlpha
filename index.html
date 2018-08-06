@@ -488,11 +488,9 @@
 			if (typeof web3 !== 'undefined') {
 				// Use Metamask's provider
 				web3js = new Web3(web3.currentProvider);
-				console.log("Using metamask");
 			} else {
 				$("#notUsingMetamask").addClass("alert alert-warning")
 					.text("Install Metamask in order to use this site :(");
-				console.log("No web3, try installing Metamask");
 				web3js = new Web3(new Web3.providers.HttpProvider("https://infura.io/"));
 			}
 
@@ -501,6 +499,7 @@
 
 		var userLatestImgBase64;
 		var allMemes;
+		var allUserTokens;
 		var latestMemes;
 		// map 
 		var addrToBalances = {};
@@ -528,8 +527,7 @@
 			$("#memeAddress").on('keyup', function() {
 				var memeAddress = $("#memeAddress").val().trim();
 		    	if (memeAddress < 40) {
-		    		console.log(">> Invalid address, Stop everything.");
-		    		return; // return everything
+		    		return; // stop everything
 		    	}
 		    	if (memeAddress.length == 40) memeAddress = "0x" + memeAddress;
 
@@ -637,11 +635,7 @@
 					if (err) {
 						console.error("Error: ", err);
 					} else {
-						// testing getMintingPrice
-						console.log(">>>> Res: ", res);
-
 						price = Number(res);
-						console.log(">>> Minting price: ", price);
 						return price;
 					}
 				});
@@ -656,7 +650,6 @@
 						console.log("Error: ", err);
 					} else {
 						reward = Number(res);
-						console.log(">>> Burning reward: ", reward);
 						return reward;
 					}
 				}) 
@@ -673,10 +666,7 @@
 						console.log("Error: ", err);
 					} else {
 						// display imgs on page
-						console.log(" -==--- memeIpfsHash ----==- ");
-						console.log(`imh: ${res}, id: ${imgId}, isLatest: ${isLatest}`);
 						imgFromIpfs(res, imgId, isLatest);
-						// imgFromIpfs
 						return res;
 					}
 				})
@@ -707,18 +697,12 @@
 					memesToBalance.push([addr, addrToBalances[addr]]);
 				}
 
-				console.log("memesToBalance 1: ", memesToBalance);
-
 				memesToBalance.sort((a, b) => {
 					return b[1] - a[1];
 				});
 
-				console.log("memesToBalance 2: ", memesToBalance);				
-
 				// ditch the values > already ranked
 				rankedMemesByBalance = memesToBalance.slice(0, 6).map(arr => arr[0]);
-
-				console.log("Result 3: ", rankedMemesByBalance);
 				
 				const displayRankedMemes = rankedMemesByBalance.map( (memeAddr, imgId) => memeIpfsHash(memeAddr, imgId)); 
 				await Promise.all(displayRankedMemes);
@@ -740,7 +724,6 @@
 						console.log("Error: ", err);
 					} else {
 						balance = Number(res);
-						console.log(">>> Balance in wei: ", balance);
 						return balance;
 					}
 				});
@@ -755,7 +738,6 @@
 						console.log("Error: ", err);
 					} else {
 						totalSupply = Number(res);
-						console.log(">>> Tokens TotalSupply: ", totalSupply);
 						return totalSupply;
 					}
 				});
@@ -771,7 +753,6 @@
 						console.log("Error: ", err);
 					} else {
 						balance = Number(res);
-						console.log(">>> Token Balance: ", balance);
 						return balance;
 					}
 				});
@@ -784,7 +765,6 @@
 			////////////////////////////////////
 			function mint(contractAddress, numTokens) {
 				if (numTokens == 0) {
-					console.log("Number of Tokens can't be 0!");
 					return;
 				}
 
@@ -805,7 +785,6 @@
 							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: <a target="_blank" href="https://rinkeby.etherscan.io/tx/' + txHash +'">' + txHash + '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
-								console.log("Successfully bought " + numTokens + " meme tokens.");
 								document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Successfully bought ' + numTokens + ' meme tokens!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 							});
 						});
@@ -815,7 +794,6 @@
 
 			function burn(contractAddress, numTokens) {
 				if (numTokens == 0) {
-					console.log("Number of Tokens can't be 0!");
 					return;
 				}
 
@@ -836,12 +814,42 @@
 							document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Your transaction has been broadcasted!</strong> Transaction hash: <a target="_blank" href="https://rinkeby.etherscan.io/tx/' + txHash +'">' + txHash + '</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 
 							waitConfirmation(txHash, function() {
-								console.log("Successfully burned " + numTokens + " meme tokens.");
 								document.querySelector("#txStatus").innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Successfully burned ' + numTokens + ' meme tokens!</strong><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 							});
 						});	
 					}
 				});
+			}
+
+			/////////////////////////
+			// allMemes -> fetchUserTokens -> 2d Array -> filter -> insert html
+			/////////////////////////
+
+			async function fetchUserTokenBalances() {
+				let userTokenBalances = allMemes.map(memeContract => {
+					allUserTokens[memeContract] = tokenBalance(memeContract);
+				});
+				await Promise.all(userTokenBalances);
+			}
+
+			function displayAllUserTokens() {
+				console.log("Called func")
+				fetchUserTokenBalances();
+				console.log("Finished: fetchUserTokenBalances");
+
+				let userTokens2dArray;
+
+				// assumption all userTokens already fetched
+				for (let memeContract in allUserTokens) {
+					userTokens2dArray.push([memeContract, allUserTokens[memeContract]]);
+				}
+
+				// filter out 0 balances
+				let userMemeTokens2dArray = userTokens2dArray.filter(meme => meme[1] > 0);
+
+				console.log(">>>>>>>>> userMemeTokens2dArray: ", userMemeTokens2dArray);
+
+
 			}
 
 			// getters
@@ -858,13 +866,13 @@
 				memeTotalSupply,
 				tokenBalance,
 				mint,
-				burn
+				burn,
+				displayAllUserTokens
 			}
 
 		}
 
 		function imgFromIpfs(imgHash, imgId, isLatest) {
-			console.log("invoking imgFromIpfs");
 
 			node.files.get(imgHash, (err, files) => {
 				if (err) {
@@ -873,16 +881,12 @@
 
 				files.forEach((file) => {
 					let domNode;
-					console.log("File path: ", file.path);
-					console.log(">> File content: ", file.content.toString('utf8'));
 
 					if (isLatest) {
 						domNode = document.getElementById(`latest${imgId}`);
 					} else {
 						domNode = document.getElementById(`best${imgId}`);
 					}
-
-					console.log(">>> domNode: ", domNode)
 
 					domNode.src = file.content.toString('utf8');
 				});
@@ -923,7 +927,6 @@
 			}
 
 			userLatestImgBase64 = document.querySelector('canvas').toDataURL();
-			console.log("userLatestImgBase64: ", userLatestImgBase64);
 		}
 
 		function saveImg(evt) {
@@ -935,12 +938,9 @@
 					console.error(err);
 				}
 
-				console.log("node buffer: Uint8Array saved into ipfs: ", res);
-
 				let ipfsHash = res[0].hash;
 
 				let url = `https://ipfs.io/ipfs/${ipfsHash}`;
-				console.log("link: ", url);
 
 				// addMeme on MemeRecorder
 				startApp().addMeme(ipfsHash, memeName);
@@ -986,7 +986,7 @@
 		var ctx = canvas.getContext("2d");
 
 		//////////////
-		// initial art
+		// initial 2 squares art + upload an image
 		//////////////
 		
 		// red
