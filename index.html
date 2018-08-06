@@ -465,6 +465,10 @@
 			<br><br>
 			<div id="memeBalance" rol="alert"></div>
 			<div id="tokenBalance" rol="alert"></div>
+
+			<br>
+			<!-- Table list of Memes the user owns -->
+			<div id="userTokens"></div>
 		</div>
 
 		<!-- contact -->
@@ -859,6 +863,28 @@
 					let userMemeTokens2dArray = userTokens2dArray.filter(meme => meme[1] > 0).sort((a, b) => b[1] - a[1]);
 
 					console.log(">>>> userMemeTokens2dArray: ", userMemeTokens2dArray);
+
+					// userTokens div id > build the whole html then shove it in the page 
+					let domTableHeader = `<table class="table table-hover">
+											  <thead>
+											    <tr>
+											      <th scope="col">Meme Address</th>
+											      <th scope="col">Number of Tokens</th>
+											    </tr>
+											  </thead>
+											  <tbody>`;
+
+					userMemeTokens2dArray.forEach(memeToken => {
+						let row = `<tr>
+									<td>${memeToken[0]}</td>
+									<td>${memeToken[1]}</td>
+								  </tr>`;
+						domTableHeader += row;
+					});
+
+					domTableHeader += "</tbody></table>"
+
+					document.querySelector("#userTokens").innerHTML = domTableHeader;
 
 				}, 1000);
 			}
