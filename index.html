@@ -499,7 +499,7 @@
 
 		var userLatestImgBase64;
 		var allMemes;
-		var allUserTokens;
+		var allUserTokens = {};
 		var latestMemes;
 		// map 
 		var addrToBalances = {};
@@ -825,31 +825,42 @@
 			// allMemes -> fetchUserTokens -> 2d Array -> filter -> insert html
 			/////////////////////////
 
-			async function fetchUserTokenBalances() {
-				let userTokenBalances = allMemes.map(memeContract => {
-					allUserTokens[memeContract] = tokenBalance(memeContract);
+			function fetchUserTokenBalances() {
+				allMemes.map(memeContract => {
+					let memeInstanceT = memeABI.at(memeContract);
+
+					memeInstanceT.tokenBalances.call(userAddress, (err, res) => {
+						if (err) {
+							console.log("Error: ", err);
+						} else {
+							allUserTokens[memeContract] = Number(res);
+						}
+					});
 				});
-				await Promise.all(userTokenBalances);
 			}
 
 			function displayAllUserTokens() {
-				console.log("Called func")
 				fetchUserTokenBalances();
-				console.log("Finished: fetchUserTokenBalances");
+				console.log(">>>> Kicked fetch user tokenBalances")
 
-				let userTokens2dArray;
+				// async await is jumbledup in my peabrain head, so fuck it
+				setTimeout(function() {
 
-				// assumption all userTokens already fetched
-				for (let memeContract in allUserTokens) {
-					userTokens2dArray.push([memeContract, allUserTokens[memeContract]]);
-				}
+					console.log(">>>> allUserTokens: ", allUserTokens);
 
-				// filter out 0 balances
-				let userMemeTokens2dArray = userTokens2dArray.filter(meme => meme[1] > 0);
+					let userTokens2dArray = [];
 
-				console.log(">>>>>>>>> userMemeTokens2dArray: ", userMemeTokens2dArray);
+					// assumption all userTokens already fetched
+					for (let memeContract in allUserTokens) {
+						userTokens2dArray.push([memeContract, allUserTokens[memeContract]]);
+					}
 
+					// filter out 0 balances then sort
+					let userMemeTokens2dArray = userTokens2dArray.filter(meme => meme[1] > 0).sort((a, b) => b[1] - a[1]);
 
+					console.log(">>>> userMemeTokens2dArray: ", userMemeTokens2dArray);
+
+				}, 1000);
 			}
 
 			// getters
@@ -867,6 +878,7 @@
 				tokenBalance,
 				mint,
 				burn,
+				fetchUserTokenBalances,
 				displayAllUserTokens
 			}
 
