@@ -2,7 +2,8 @@
 
 [In response to the idle workers problem](https://mohamedhayibor.github.io/blog/post/Update-on-Idle-Workers-Problem-6-13-18/)
 
-> [Master branch testing with Rinkeby](https://mohamedhayibor.github.io/ethervineAlpha/)
+* [Master branch testing with Rinkeby](https://mohamedhayibor.github.io/ethervineAlpha/)
+* [Mainnet Contract](https://etherscan.io/address/0xfb1b64f06888e5a893bb5504b3ed1e1d39a9a35f)
 
 
 FAQ
